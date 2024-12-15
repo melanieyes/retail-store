@@ -7,7 +7,8 @@ import java.sql.*;
 import java.util.*;
 
 public class OrderItemController {
-    // Add an order item
+
+   
     public void addOrderItem(OrderItem orderItem) throws SQLException {
         String query = "INSERT INTO OrdItem (OrdID, ProdsID, Qty, UnitPrice, TotalPrice) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = DataAdapter.getConnection();
@@ -21,7 +22,6 @@ public class OrderItemController {
         }
     }
 
-    // Get order items by order ID
     public List<OrderItem> getOrderItems(int ordID) throws SQLException {
         List<OrderItem> orderItems = new ArrayList<>();
         String query = "SELECT * FROM OrdItem WHERE OrdID = ?";
@@ -36,7 +36,17 @@ public class OrderItemController {
         return orderItems;
     }
 
-    // Helper method to map a ResultSet to an OrderItem object
+
+    public void deleteOrderItem(int ordItemID) throws SQLException {
+        String query = "DELETE FROM OrdItem WHERE OrdItemID = ?";
+        try (Connection conn = DataAdapter.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, ordItemID);
+            stmt.executeUpdate();
+        }
+    }
+
+
     private OrderItem mapOrderItem(ResultSet rs) throws SQLException {
         OrderItem orderItem = new OrderItem();
         orderItem.setOrdItemID(rs.getInt("OrdItemID"));
