@@ -138,12 +138,10 @@ public class OrderItemView extends JPanel {
             int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this order item?", "Confirm", JOptionPane.YES_NO_OPTION);
             if (confirm == JOptionPane.YES_OPTION) {
                 try {
-                    // TODO: Implement delete functionality in the OrderItemController
-                    JOptionPane.showMessageDialog(this, "Delete functionality not implemented yet!", "Info", JOptionPane.INFORMATION_MESSAGE);
-                    // Uncomment below once the deleteOrderItem method is implemented
-                    // orderItemController.deleteOrderItem(orderItemId);
-                    // loadOrderItems(); // Refresh the table
-                } catch (Exception e) {
+                    orderItemController.deleteOrderItem(orderItemId); // Call the controller to delete the item
+                    loadOrderItems(); // Refresh the table
+                    JOptionPane.showMessageDialog(this, "Order item deleted successfully.");
+                } catch (SQLException e) {
                     JOptionPane.showMessageDialog(this, "Error deleting order item: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                     e.printStackTrace();
                 }
